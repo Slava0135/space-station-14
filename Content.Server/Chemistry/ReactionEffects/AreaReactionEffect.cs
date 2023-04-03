@@ -111,7 +111,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             }
 
             areaEffectComponent.TryAddSolution(splitSolution);
-            areaEffectComponent.Start(amount, _duration, _spreadDelay, _removeDelay);
+            EntitySystem.Get<SolutionAreaEffectSystem>().Start(ent, areaEffectComponent, amount, _duration, _spreadDelay, _removeDelay);
 
             SoundSystem.Play(_sound.GetSound(), Filter.Pvs(args.SolutionEntity), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
         }

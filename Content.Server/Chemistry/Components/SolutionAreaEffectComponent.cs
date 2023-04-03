@@ -34,28 +34,6 @@ namespace Content.Server.Chemistry.Components
         public bool ReactedTile = false;
 
         /// <summary>
-        /// Adds an <see cref="SolutionAreaEffectInceptionComponent"/> to owner so the effect starts spreading and reacting.
-        /// </summary>
-        /// <param name="amount">The range of the effect</param>
-        /// <param name="duration"></param>
-        /// <param name="spreadDelay"></param>
-        /// <param name="removeDelay"></param>
-        public void Start(int amount, float duration, float spreadDelay, float removeDelay)
-        {
-            if (Inception != null)
-                return;
-
-            if (_entities.HasComponent<SolutionAreaEffectInceptionComponent>(Owner))
-                return;
-
-            Amount = amount;
-            var inception = _entities.AddComponent<SolutionAreaEffectInceptionComponent>(Owner);
-
-            inception.Add(this);
-            inception.Setup(amount, duration, spreadDelay, removeDelay);
-        }
-
-        /// <summary>
         /// Gets called by an AreaEffectInceptionComponent. "Clones" Owner into the four directions and copies the
         /// solution into each of them.
         /// </summary>

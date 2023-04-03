@@ -1,12 +1,11 @@
 ﻿using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
-using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {
@@ -36,7 +35,7 @@ namespace Content.Server.Chemistry.ReactionEffects
 
             if (contents != null)
                 areaEffectComponent.TryAddSolution(contents);
-            areaEffectComponent.Start(amount, duration, spreadDelay, removeDelay);
+            EntitySystem.Get<SolutionAreaEffectSystem>().Start(ent, areaEffectComponent, amount, duration, spreadDelay, removeDelay);
 
             entityManager.EntitySysManager.GetEntitySystem<AudioSystem>()
                 .PlayPvs(sound, ent, AudioParams.Default.WithVariation(0.125f));
