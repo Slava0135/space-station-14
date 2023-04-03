@@ -24,7 +24,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
         }
 
-        private void OnReactionAttempt(EntityUid uid, SolutionAreaEffectComponent component, ReactionAttemptEvent args)
+        private void OnReactionAttempt(EntityUid uid, SolutionAreaEffectComponent component, ref ReactionAttemptEvent args)
         {
             if (args.Solution.Name != SolutionAreaEffectComponent.SolutionName)
                 return;
@@ -34,7 +34,7 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 if (effect is AreaReactionEffect)
                 {
-                    args.Cancel();
+                    args.Cancelled = true;
                     return;
                 }
             }

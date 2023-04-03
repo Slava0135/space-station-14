@@ -49,7 +49,7 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
     }
 
-    private void OnReactionAttempt(EntityUid uid, BloodstreamComponent component, ReactionAttemptEvent args)
+    private void OnReactionAttempt(EntityUid uid, BloodstreamComponent component, ref ReactionAttemptEvent args)
     {
         if (args.Solution.Name != BloodstreamComponent.DefaultBloodSolutionName
             && args.Solution.Name != BloodstreamComponent.DefaultChemicalsSolutionName

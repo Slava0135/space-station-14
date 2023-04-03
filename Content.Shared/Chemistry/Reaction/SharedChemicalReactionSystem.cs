@@ -1,11 +1,9 @@
 using System.Linq;
-using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using Content.Shared.Interaction.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -128,7 +126,7 @@ namespace Content.Shared.Chemistry.Reaction
             }
 
             var attempt = new ReactionAttemptEvent(reaction, solution);
-            RaiseLocalEvent(owner, attempt, false);
+            RaiseLocalEvent(owner, ref attempt);
             if (attempt.Cancelled)
             {
                 lowestUnitReactions = FixedPoint2.Zero;
@@ -310,15 +308,11 @@ namespace Content.Shared.Chemistry.Reaction
     /// <reamrks>
     ///     Some solution containers (e.g., bloodstream, smoke, foam) use this to block certain reactions from occurring.
     /// </reamrks>
-    public sealed class ReactionAttemptEvent : CancellableEntityEventArgs
+    [ByRefEvent]
+    public record struct ReactionAttemptEvent(ReactionPrototype Reaction, Solution Solution)
     {
-        public readonly ReactionPrototype Reaction;
-        public readonly Solution Solution;
-
-        public ReactionAttemptEvent(ReactionPrototype reaction, Solution solution)
-        {
-            Reaction = reaction;
-            Solution = solution;
-        }
+        public readonly ReactionPrototype Reaction = Reaction;
+        public readonly Solution Solution = Solution;
+        public bool Cancelled = false;
     }
 }
