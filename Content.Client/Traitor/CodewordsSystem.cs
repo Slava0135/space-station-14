@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Content.Client.Chat;
 using Content.Shared.Traitor;
 
@@ -33,8 +34,8 @@ public sealed class CodewordsSystem : EntitySystem
         var msg = ev.Msg.Message;
         foreach (var word in _words)
         {
-            var sub = Prefix + word + Suffix;
-            msg = msg.Replace(word, sub);
+            var sub = Prefix + "$0" + Suffix;
+            msg = Regex.Replace(msg, word, sub, RegexOptions.IgnoreCase);
         }
         ev.Msg.WrappedMessage = ev.Msg.WrappedMessage.Replace(ev.Msg.Message, msg);
     }
