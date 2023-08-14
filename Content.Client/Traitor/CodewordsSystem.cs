@@ -30,12 +30,12 @@ public sealed class CodewordsSystem : EntitySystem
         {
             return;
         }
-        var msg = ev.Msg.WrappedMessage;
+        var msg = ev.Msg.Message;
         foreach (var word in _words)
         {
             var sub = Prefix + word + Suffix;
             msg = msg.Replace(word, sub);
         }
-        ev.Msg.WrappedMessage = msg;
+        ev.Msg.WrappedMessage = ev.Msg.WrappedMessage.Replace(ev.Msg.Message, msg);
     }
 }
