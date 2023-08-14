@@ -54,7 +54,7 @@ public sealed class ChatUIController : UIController
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
     [UISystemDependency] private readonly TypingIndicatorSystem? _typingIndicator = default;
-    [UISystemDependency] private readonly ChatSystem? _chatSys = default;
+    [UISystemDependency] private readonly ChatSystem? _chat = default;
 
     private ISawmill _sawmill = default!;
 
@@ -693,8 +693,8 @@ public sealed class ChatUIController : UIController
     {
         radioChannel = null;
         return _player.LocalPlayer?.ControlledEntity is EntityUid { Valid: true } uid
-           && _chatSys != null
-           && _chatSys.TryProccessRadioMessage(uid, text, out _, out radioChannel, quiet: true);
+           && _chat != null
+           && _chat.TryProccessRadioMessage(uid, text, out _, out radioChannel, quiet: true);
     }
 
     public void UpdateSelectedChannel(ChatBox box)
@@ -776,13 +776,16 @@ public sealed class ChatUIController : UIController
     private void OnChatMessage(MsgChatMessage message)
     {
         var msg = message.Message;
-        ProcessChatMessage(msg);
-
         if ((msg.Channel & ChatChannel.AdminRelated) == 0 ||
             _cfg.GetCVar(CCVars.ReplayRecordAdminChat))
         {
             _replayRecording.RecordClientMessage(msg);
         }
+        if (_chat != null)
+        {
+            _chat.PrepareMessage(msg);
+        }
+        ProcessChatMessage(msg);
     }
 
     public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
