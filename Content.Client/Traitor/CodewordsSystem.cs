@@ -35,6 +35,7 @@ public sealed class CodewordsSystem : EntitySystem
         foreach (var word in _words)
         {
             var sub = Prefix + "$0" + Suffix;
+            var pattern = $"(\\W{word}\\W)|(^{word}\\W)|(\\W{word}$)|(^{word}$)";
             msg = Regex.Replace(msg, word, sub, RegexOptions.IgnoreCase);
         }
         ev.Msg.WrappedMessage = ev.Msg.WrappedMessage.Replace(ev.Msg.Message, msg);
