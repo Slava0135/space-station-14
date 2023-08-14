@@ -5,8 +5,8 @@ namespace Content.Client.Traitor;
 
 public sealed class CodewordsSystem : EntitySystem
 {
-    private const string _prefix = "[bold][color=red]";
-    private const string _suffix = "[/color][/bold]";
+    private const string Prefix = "[bold][color=red]";
+    private const string Suffix = "[/color][/bold]";
 
     private string[]? _words;
 
@@ -33,7 +33,7 @@ public sealed class CodewordsSystem : EntitySystem
         var msg = ev.Msg.WrappedMessage;
         foreach (var word in _words)
         {
-            var sub = _prefix + word + _suffix;
+            var sub = Prefix + word + Suffix;
             msg = msg.Replace(word, sub);
         }
         ev.Msg.WrappedMessage = msg;
