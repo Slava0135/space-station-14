@@ -430,3 +430,27 @@
     tags:
     - Trash
   - type: SpaceGarbage
+
+- type: entity
+  id: LuckyBox
+  parent: PresentRandomInsane
+  name: lucky box
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/lucky.rsi
+    layers:
+      - state: wrapped
+  - type: RandomGift
+    wrapper: LuckyTrash
+
+- type: entity
+  id: LuckyTrash
+  parent: PresentTrash
+  suffix: ""
+  name: Lucky Wrapping Paper
+  description: If you can read this, you are lucky!
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/lucky.rsi
+    layers:
+      - state: unwrapped
